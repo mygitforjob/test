@@ -70,6 +70,15 @@ Singleton.prototype.act1 = function(){return 'Act-1'}
 	}())
 	
 } */
+/////////////////////////////////////////
+Singleton = (function(){
+  var inst;
+  return function(){ return inst = inst || this }
+})()
+
+var s1 = new Singleton(), s2 = new Singleton();
+console.log(s1 === s2); // true
+/////////////////////////////////////////
 var global = 'Global' 
  
  var Bar = (function(){ 

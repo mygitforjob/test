@@ -1,0 +1,109 @@
+<script>
+
+var Singleton = (function(){
+	var inst;
+	
+	function Singleton(){
+		if(!inst) inst = this;
+		else return inst;
+		
+		
+		function act(){console.log('act_1')}
+		this.act1 = act;
+		this.a = "AAA"
+	}
+	Singleton.prototype.act2 = function(){console.log('act_2')}
+	return Singleton;
+})()
+ 
+ 
+/* 
+
+// Более простой вариант
+ var Singleton = (function(){
+	var inst;
+	
+	return function Singleton(){
+		if(!inst) inst = this;
+		else return inst;
+	}
+	
+})();
+
+Singleton.prototype.act1 = function(){return 'Act-1'}
+
+ */
+ /* 
+  var Singleton = (function(){
+	var inst;
+	
+	return function Singleton(){
+		//if(!inst) inst = this;
+		//else return inst; 
+		
+		//return !inst ? inst = this : inst;
+		return inst = inst || this;
+	}
+	
+})();
+ */
+Singleton.prototype.act1 = function(){return 'Act-1'}
+
+/*  function Singleton(){
+	
+	return (function (){
+		var inst;
+	
+		function Singleton(){
+			if(!inst){
+				 inst = this;
+			}else{
+				return inst;
+			}
+			
+			function act(){console.log('act_1')}
+			this.act1 = act;
+			this.a = "AAA"
+		}
+		Singleton.prototype.act2 = function(){console.log('act_2')}
+		return Singleton;
+	}())
+	
+} */
+var global = 'Global' 
+ 
+ var Bar = (function(){ 
+	var inst = this;
+	this.local = 'Local';
+	var loc = 'Bar-local'
+	function Sing(){
+		this.s = 'Single';
+		this.act = function(){
+			console.log(local);
+			console.log(loc);
+			console.log(this.s);
+			return inst;
+		}		
+	}
+	return Sing;
+	})();
+ 
+var ns = (function(){
+	var x  = 'NS';
+	var self = this
+	var foo = function(){ var a = function(){return x}; return a;}
+	return foo();
+ })()
+ 
+Singleton.prototype.z = 'ZZZ';
+
+s1 = new Singleton
+s2 = new Singleton
+console.log(s1 === s2)
+s1.act1();
+console.log('QQ');
+s2.act2();
+console.log(s2.z);
+console.log(s2.a);
+console.log(s1 === s2)
+</script>

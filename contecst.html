@@ -1,0 +1,247 @@
+<script>
+/*
+*  КОНТЕКСТ ФУНКЦИЙ
+*/
+
+class A{
+   constructor() {
+    this.x = 'Hello';
+  }
+  foo(){return this.x}
+  render(){
+      return this.foo.bind(this); // ф-я вызовится в контексте класса A - вернет Hello
+      return this.foo; // вызовится в контексте класса B вернет Bye
+  }
+}
+
+class B{
+ constructor() {
+    this.x = 'Bye';
+    this.z = new A();
+    this.r = this.z.render();
+  }
+ 
+}
+//let z = new A; console.log(z.render()())
+let z = new A; console.log(z.x)
+let q = new B; console.log(q.r()); console.log(q.x);
+
+
+/*
+* ЗАМЫКАНИЯ
+*/
+
+function foo(x){ return function(){console.log(x)}}
+
+for(var i = 0; i < 10; i++){
+  setInterval(foo(i), 2000)
+}
+
+//-------------------------------------------
+var myClosure = function outerFunction() {
+ 
+  var hidden = 1;
+ 
+  return {
+    inc: function innerFunction() {
+      return hidden++;
+    }
+  };
+ 
+}(); // и сразу ее вызываем
+ 
+myClosure.inc();  // возвращает 1
+myClosure.inc();  // возвращает 2
+myClosure.inc();  // возвращает 3
+//-------------------------------------------
+
+function bar(){
+	var x =1; 
+	return {
+		act: function(){ return x++ }
+	}
+}
+z = bar(); 
+z.act(); // 1
+z.act(); // 2
+z.act(); // 3
+//--------------------------------------------
+
+z = function (){ var x =1; return { act: function(){ return x++ } } }() // сразу ее вызываем
+z.act(); // 1
+z.act(); // 2
+z.act(); // 3
+
+/*
+* ДЕСТРУКТУРИЗАЦИЯ
+*/
+
+// пример с функцией
+x = { a: 1, b: 2 };
+z = ( { a, b } ) => { console.log( a,b ) };  
+z(x);
+
+// пример с массивом
+arr = [1,2,3];
+var [a,b,c] = arr;
+console.log(a, b, c)
+
+//пример с объектом
+obj = {x: 'A', y: 'B', zz: 'C'}
+var {x, y, zz} = obj
+console.log(x, y, zz)
+
+// пример на функции
+let Bar = () => {
+  const x = () => 'Hello X';
+  const y = () => 'Bye Y';
+  const z = () => 'Good Night Z';
+
+  return {x, y, z}
+}
+
+x = Bar(); console.log(x.x()); // Hello X
+
+
+/*
+* СПРЕД
+*/
+
+a = [1,2,3];
+z = [...a, 4,5,6]; // [1, 2, 3, 4, 5, 6]
+console.log(z);
+// на объектах пока только через babel
+//a = {x: 1, z: 2}
+//z = {...a, a: 2, b: 3};
+//console.log(z)
+
+/*
+* Функция воваращающая функцию
+*/
+foo = function(x){
+	bar = function(y){
+		return function(x){
+			return y+x
+		}
+	}; 
+	return bar(x);
+}
+foo(1)(2); // 3
+
+// более краткая запись
+boo = function(x){
+	bar = (y) => (x) => y + x; 
+	return bar(x);
+}
+// еще более краткие записи
+// boo = function(x){ return ( bar = (y) => (x) => y + x )( x ); }
+// boo = ( (x) => (y) => (x) => y + x )( x );
+// boo = (y) => (x) => y + x;
+boo(1)(2); // 3
+
+z = boo(1);
+z(5); // 6
+
+// Еще пример
+
+cls = ( func ) => ( prm ) => func( prm );
+cls( (x) => { return x * 10 } )( 5 ); // 50
+
+( (x) => { return x * 10 } )( 5 ); // 50
+
+/*
+* Аргументы функции
+*/
+
+var getTrack = (...args) => {
+	console.log(args);
+	console.log(args[0], args[1]);
+}
+
+/*
+* ПРОМИСЫ
+*/
+
+var delay = ( ms = 1000 ) => {
+  return new Promise( ( resolve, reject ) => {
+    if( true ) setTimeout( () => resolve(), ms );
+    else setTimeout( () => reject(), ms );
+  })
+}
+
+delay(2000)
+	.then( () => { console.log( 'TRUE' ) } )
+	.catch( () => { console.log( 'FALSE' ) } );
+
+//---------------------------------------
+	
+var prm = new Promise( ( resolve, reject ) => {
+  // Тут идет ассинхронный код, но в конце обязательно должны быть эти две функции
+  if( 1 ) resolve('--GOOD RESULT--');
+  else reject('--BAD RESULT--');
+})
+// Чэйны - цепочки вызовов  
+prm.then( (result) => { setTimeout(()=>{console.log( 'ResolveTrue' + result)}, 3000); return '--Second Result--' } ) // ResolveTrue--GOOD RESULT-- // возврощаемое значение попадет в следующий then
+	//.then( (res) => { if( res == '--Second Result--' ) reject() }) // в случае ошибки в предыдущем then можно выкинуть ошибку с помощью reject()
+	.then((txt) => { console.log(txt) } ) // txt это '--Second Result--' из предыдущего then
+	.catch( (bad) => { console.log( 'Reject-False' + bad) } );	
+
+//-----------------------------------------
+
+//Функция делает тоже самое, но в Промисах есть два конкретных метода которые отвечают за true или false это then и catch
+// Логика обработки описывается в другом месте, причем then'ы выполняются асинхронно, что бы они выполнялись синхроно нужно возвращать новый Promise 
+//Функции resolve/reject принимают ровно один аргумент – результат/ошибку, именно он передаётся обработчикам в .then,
+var prm2 = (resolve, reject) => {
+    if(1) resolve();
+  else reject();
+}
+
+prm2( () => { console.log( "true prm2 " ) }, () => { console.log( "false prm2" ) } );	
+	
+/*
+* получить ширину картинки чере REACT
+*/
+
+/*
+var Player = React.createClass({
+  _onLoad(e) {
+    console.log(e.target.offsetWidth)
+  },
+  render() {
+    return (<img src={this.props.imageURL} onLoad={this._onLoad}/>)
+  }
+})
+
+React.render(<Player imageURL="http://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg"/>, document.body)
+
+}()
+
+*/
+</script>
+
+
+<div id='sqr' style='background-color: blue; width: 20px; height: 20px' ></div>
+<button id='btn1'>START</button>
+<button id='btn2'>STOP</button>
+<script>
+
+var sqr = document.getElementById('sqr'); 
+// sqrWidth = window.getComputedStyle(sqr, null).width // узнать ширину , т.к. если стиль не прописан в теге к ниму нет доступа
+btn1 = document.getElementById('btn1');
+btn2 = document.getElementById('btn2');
+var timer;
+btn1.onclick = function(){
+	x = 5;
+	//timer = setInterval(function(){x += 1; sqr.style.width = x }, 20)
+	while(x < 1000){
+		sqr.style.width = x;
+		x++;
+	}
+}
+
+
+btn2.onclick = function(){
+	clearInterval(timer);
+}
+
+</script>

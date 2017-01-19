@@ -78,6 +78,17 @@ Singleton = (function(){
 
 var s1 = new Singleton(), s2 = new Singleton();
 console.log(s1 === s2); // true
+
+
+Sing = (function(){
+  var inst;
+  return {
+    getInst: function(){ return inst || (inst = this) }
+  };
+})();
+
+s1 = Sing.getInst(); s2 = Sing.getInst(); 
+console.log(s1 === s2); // true
 /////////////////////////////////////////
 var global = 'Global' 
  

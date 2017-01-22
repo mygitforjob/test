@@ -1,5 +1,5 @@
-<script>
-// функции возвращающие функцию
+п»ї<script>
+// С„СѓРЅРєС†РёРё РІРѕР·РІСЂР°С‰Р°СЋС‰РёРµ С„СѓРЅРєС†РёСЋ
 function setupName(name){
   var name = name;
   return function(){ return name }
@@ -17,7 +17,7 @@ var getName = (function(name){
 
 console.log(getName());
 
-// самоопределяемые функции
+// СЃР°РјРѕРѕРїСЂРµРґРµР»СЏРµРјС‹Рµ С„СѓРЅРєС†РёРё
 
 var foo = function(){
   console.log('foo');

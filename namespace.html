@@ -1,0 +1,26 @@
+<script>
+	
+var MYAPP = MYAPP || {}
+
+MYAPP.namespace = function(str){
+  var parts = str.split('.'),
+      parent = MYAPP;
+  parts = parts.slice(1);
+  
+  for(var i = 0; i < parts.length; i += 1){
+ 
+    if(typeof parent[parts[i]] === 'undefined'){
+      parent[parts[i]] = {}
+    }
+    parent = parent[parts[i]]; // Передается ссылка на !ВЛОЖЕННЫЙ ОБЪЕКТ!, в parrent лежит MYAPP.aaa, затем будетб MYAPP.aaa.bbb и так далее
+  }
+
+  return parent;
+    
+}
+
+var module1 = MYAPP.namespace('MYAPP.aaa.bbb.ccc.ddd');
+console.log(MYAPP)
+
+
+</script>

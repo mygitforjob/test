@@ -90,6 +90,21 @@ Sing = (function(){
 
 s = Sing.getInst(); s2 = Sing.getInst(); console.log(s === s2); // true
 /////////////////////////////////////////
+
+// обратить внимание описание ф-ии начинается со слова new
+var Singleton = new function() { 
+	var single = this;
+
+	return function() { return single };
+}
+
+
+console.log( x === y); 
+
+/////////////////////////////////////////
+
+
+
 var global = 'Global' 
  
  var Bar = (function(){ 

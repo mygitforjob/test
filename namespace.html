@@ -1,12 +1,16 @@
 ﻿<script>
-	
+/*
+* Функция пространства имен
+*/	
 var MYAPP = MYAPP || {}
 
 MYAPP.namespace = function(str){
-  var parts = str.split('.'),
-      parent = MYAPP;
-  parts = parts.slice(1);
-  
+	var parts = str.split('.'),
+		parent = MYAPP;
+
+	if (parts[0] === 'MYAPP'){	  
+	  parts = parts.slice(1);
+	}
   for(var i = 0; i < parts.length; i += 1){
  
     if(typeof parent[parts[i]] === 'undefined'){
@@ -19,8 +23,29 @@ MYAPP.namespace = function(str){
     
 }
 
-var module1 = MYAPP.namespace('MYAPP.aaa.bbb.ccc.ddd');
-console.log(MYAPP)
+//var module1 = MYAPP.namespace('MYAPP.aaa.bbb.ccc.ddd');
+//console.log(MYAPP)
+MYAPP.namespace('once.upon.a.time.there.was.this.long.nested.property');
 
 
+
+// приватные свойства через конструктор и прототип
+// даступ к ним осущ-ся через публичные методы
+function Mobile(name_phone){
+  var model = name_phone; // собственное приватное свойство
+  
+  this.getModel = function(){return model}
+}
+
+Mobile.prototype = (function(){
+  var store = 'Svyaznoy'; // приватное свойство через прототип
+  return {
+    getStore: function(){
+      return store;
+    }
+  }
+})()
+
+var iphone = new Mobile('Iphone');
+console.log(iphone.getModel(), iphone.getStore())
 </script>

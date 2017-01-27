@@ -1,0 +1,48 @@
+<script>
+function User(name){this.name = name; User.counter();}
+User.count = 0;
+User.counter = function(){User.count++}
+User.getCount = function(){return User.count}
+
+john = new User('John'); mike = new User('Mike'); 
+john = new User('John'); mike = new User('Mike'); console.log(User.getCount()); console.log(User.count)
+
+////////////////////////////////////////////////////////
+
+function Foo(name){this.name = name; this.getName = function(){return this.name}};
+
+Foo.name = 'Foo'; Foo.getname = function(){return this.name;}; console.log(Foo.getname());
+
+Foo.prototype.get_name = Foo.getname
+
+john = new Foo('John'); console.log(john.get_name())
+
+var Counter = (function(){
+  var count = 0;
+  return function(){
+    console.log(++count)
+  }
+  
+}());
+
+new Counter(); new Counter(); new Counter(); new Counter();
+
+////////////////////////////////////////////////////////
+
+var UserId; 
+UserId = (function(){
+  var id = 0;
+  function User(name){
+    this.id = ++id;
+    this.name = name;
+    
+    UserId.last = id
+  }
+  return User
+}());
+
+john = new UserId('John'); console.log(john.id);
+mike = new UserId('Mike'); console.log(mike.id);
+ivan = new UserId('Ivan'); console.log(ivan.id);
+console.log('Last user id => ' + UserId.last)
+</script>

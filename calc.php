@@ -59,7 +59,7 @@
 		</table>
 	</div>
 </div>
-<script src='jquery.js'></script>
+<script src="http://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script>
 	$('#inpCalc').on('click', function(){if(this.value == 0) this.value = '';})
 	$('#inpCalc').on('blur', function(){if(this.value == '') this.value = 0;})

@@ -142,3 +142,69 @@ console.log(s2.z);
 console.log(s2.a);
 console.log(s1 === s2)
 </script>
+
+<script>
+// Singleton - через переопределение конструктора
+function Universe() {
+  // сохраненный экземпляр
+  var instance = this;
+  // создать новый экземпляр
+  this.start_time = 0;
+  this.bang = 'Big';
+  // переопределить конструктор
+  Universe = function () {
+    return {name: 'Uni'};
+  };
+}
+// переопределили конструкор
+console.log(new Universe.prototype.constructor) // {start_time: 0, bang: 'Big'}
+
+// конструкор уже переропределен
+console.log(new Universe.prototype.constructor) // {name: 'Uni'}
+
+
+// Singleton
+function Universe() {
+  // сохраненный экземпляр
+  var instance = this;
+  // создать новый экземпляр
+  this.start_time = 0;
+  this.bang = 'Big';
+  // переопределить конструктор
+  Universe = function () {
+    return instance;
+  };
+}
+
+// Singleton - через замыкание
+var Universe;
+
+(function () {
+  var instance;
+  Universe = function Universe() {
+  if (instance) {
+    return instance;
+  }
+  instance = this;
+    // добавить остальную функциональность
+  this.start_time = 0;
+  this.bang = 'Big';
+  };
+}());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

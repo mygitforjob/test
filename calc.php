@@ -80,12 +80,9 @@
 					val = val.slice(0, val.length -1);
 				}
 				$('#inpCalc').val(val += this.innerHTML);
-				//console.log(lastSymb);
+				
 				
 		}
 		
 	})
 </script>
-
-<?
-echo 'Culculate';

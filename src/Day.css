@@ -1,0 +1,50 @@
+.Days{
+	min-width: 200px;	
+	max-width: 550px;
+	margin: 0 auto;
+	
+}
+.Day{
+	min-width: 25px;
+	width: 70px;
+	height: 50px;
+	border: 1px solid black;
+	float: left;
+	margin: 1px;
+	background-color: #DDDDDD;
+}
+.Day-day{
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 2px dotted #ccc;
+}
+.Day-numbers div{
+	font-size: 12px;
+	float: left;
+	padding: 2px;
+}
+.Day-numbers{
+	width: 80%;
+	margin: 0 auto;	
+}
+.Day-credit{
+	color: #008040;
+}
+.Day-debit{
+	color: #FF3366;
+}
+
+.Day-week div{
+	width: 70px;
+	height: 25px;
+	border: 1px solid black;
+	float: left;
+	margin: 1px;
+	padding-top: 4px;
+	background-color: #272822;
+	color: #3286CF;
+}
+.btn-pressed{
+	color: red;
+}

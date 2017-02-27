@@ -78,4 +78,74 @@ function calendar() {
   document.write("</table>");
   document.writeln("</div>");
 }
+
+function getDays(m){
+    return new Date(2017,m,0).getDate() // сколько дней в месяце
+  }
+
+
+function getDayz(m = new Date().getMonth() + 1){ // массив с кол-ом дней
+    let maxdays = this.getDays(m);
+    let dayz = [];
+    for (var i = 1; i <= maxdays; i++){
+          dayz.push(i) 
+      }
+    return dayz;
+  }
+
+function addDate(dayz, store, year, month){ // добавить в массив дней, объект с данными, если они есть
+    let daysArr =  store[year][month];
+    let i = 0;
+    
+    let d = dayz.map(function(v, k){
+    let length = daysArr.length;
+      if(i < length && v === daysArr[i].day ){
+       let day = daysArr[i];
+        console.log(i++);
+       console.log('Зашли');
+        return  day //daysArr[--i]
+      }
+       else{
+        //console.log(v)
+        return v;
+       }  
+    })
+
+    return d;
+  }
+
+  //dayz = getDayz();
+
+
+store = {
+  "2017": 
+    {
+      feb:[
+          {
+            day: 2,
+            debit: 200,
+            credit: 1000,
+            goods:[
+                  { name: "шампунь", price: 150},
+                  { name:"хлеб",price: 20},
+                  { name: "масло", price: 110}
+                ]
+              }, {
+            day: 15,
+            debit: 500,
+            credit: 6500,
+            goods:[
+                  { name: "мыло", price: 150},
+                  { name:"кофе",price: 20},
+                  { name: "молоко", price: 110}
+                ]
+            }
+      ], 
+    }
+}
+ dayz = getDayz();
+let d //= 'clear'
+d = addDate(dayz, store, '2017', 'feb'); console.log(d)
+
+
 </script>

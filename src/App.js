@@ -47,12 +47,12 @@ class App extends Component {
             {m[this.state.month-1]}
           </button>
         </div> 
-        <Day />
+        <Day month={m[this.state.month-1]} />
          
         <Calendar 
           month={this.state.month} 
           voidDays={this.state.voidDays}
-          year={2017}
+          year={'2017'}
         />
 
       </div>

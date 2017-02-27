@@ -21,20 +21,20 @@ class Time extends Component {
     if(this.state.time <= 0) this.myTimer('plus');
     if(this.state.time >= 250) this.myTimer('minus');
   }
-  myTimer(op){
+  myTimer(op){ // цвета
     let self = this;
     let count =  0;
     setInterval(function(){
       if(self.state.op === 'plus') {
-        self.setState({time: count+=10})
+        self.setState({time: count+=30})
         if(count > 250) self.setState({op: 'minus'});
       }
       else if(self.state.op === 'minus') {
-        self.setState({time: count-=10})
+        self.setState({time: count-=30})
         if(count < 1) self.setState({op: 'plus'});
       }
       //self.setState({time: ++count})
-    }, 100);
+    }, 80);
   }
 
   render() {

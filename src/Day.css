@@ -1,5 +1,5 @@
 .Days{
-	min-width: 200px;	
+	max-width: 200px;	
 	max-width: 550px;
 	margin: 0 auto;
 	
@@ -47,4 +47,8 @@
 }
 .btn-pressed{
 	color: red;
+}
+
+.today{
+	background-color: #FFCC99;
 }

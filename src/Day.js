@@ -39,7 +39,7 @@ class Time extends Component {
       <button className={btnClass} onClick={this.handleBtn.bind(this)}>Кнопка</button>
 
       <div>
-        <h4>&lt;&lt; Февраль &gt;&gt;</h4>
+        <h4>&lt;&lt; {this.props.month} &gt;&gt;</h4>
       </div>
       
       <div className='Days'>

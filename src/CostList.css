@@ -1,0 +1,14 @@
+.CostList{
+	border: 1px solid #333;
+	position: absolute;
+	display: block;
+	clear: both;
+	top: 100;
+	#left: 500;
+	background-color: #fff;
+	padding: 20px;
+}
+
+.CostList-hidden{
+	display: block;
+}

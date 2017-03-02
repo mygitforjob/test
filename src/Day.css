@@ -12,6 +12,7 @@
 	float: left;
 	margin: 1px;
 	background-color: #DDDDDD;
+	cursor: default
 }
 .Day-day{
 	font-size: 24px;

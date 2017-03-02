@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 //import './Calendar.css';
 //import classnames from 'classnames';
 import OneDay from './OneDay';
+import CostList from './CostList';
 import store from './store';
-//import createFragment from 'react-addons-create-fragment' 
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
-    //console.log('YAYAYA')
     this.state = {
       isPressed: false,
-      store: store
+      store: store,
+      goods: [],
+      hidden: 'none'
     };
   }
 
@@ -29,14 +31,9 @@ class Calendar extends Component {
     return new Date(2017,m,0).getDate() // сколько дней в месяце
   }
 
-  go(m, d){
-    var weekday = this.getDay(m, d);
-    var days = this.getDays(m);
-    console.log('Weekday '+weekday, 'days '+days);
-  }
+
 
   voidDays(days, max=1){ // добавили пустые дни в массив
-     console.time('Calendar')
     if(max === 0) max = 7;
     //if(max === 1) max = 1;
     while(--max) days.unshift(''); // пустые ячейки в начало месяца
@@ -47,8 +44,6 @@ class Calendar extends Component {
       else days.push('');
       end--;
     }
-
-     console.timeEnd('Calendar')
   }
 
   getDayz(m = new Date().getMonth() + 1){ // массив с кол-ом дней
@@ -66,73 +61,69 @@ class Calendar extends Component {
     let i = 0;
     
     let length = daysArr.length;
-    let d = dayz.map(function(v, k){
-       
+    return dayz.map(function(v, k){
       if(i < length && v === daysArr[i].day ){
-       let day = daysArr[i];
+        let day = daysArr[i];
         i++
-        //console.log(i++);
-       //console.log('Зашли');
-        return  day //daysArr[--i]
-      }
-       else{
-        //console.log(v)
+        return  day;
+      }else{
         return v;
-       }  
+      }  
     })
-
-    return d;
   }
-
+  getGoods(goods){
+    this.setState({goods: goods, hidden:'block'});
+  }
   getRenDayz(dayz, month){
+    let self = this;
     let today = new Date().getDate();
     let thisMonth = new Date().getMonth();
     let days = dayz.map(function(v, k){
-      let todayClass;
-      //todayClass = today == v ? 'today' : '';
-      if(today === v && thisMonth == month) todayClass = 'today'
-      let week = 'Days'
-      //console.log(v, typeof v );
+      let week = 'Days';
+      let todayClass;      
+      if(today === v && thisMonth === month) todayClass = 'today'
+      
       if(typeof v === 'object'){
-        console.log('Debit',v.debit);
-
+        //console.log('Debit',v.debit);
         return (
           <div className={week} key={k}>
-            <OneDay key={k} day={v.day} credit={v.credit} debit={v.debit} goods={v.goods} today={todayClass} />
+            <OneDay key={k} day={v.day} 
+              credit={v.credit} debit={v.debit} 
+              goods={v.goods} today={todayClass} getGoods={self.getGoods.bind(self, v.goods)} />
+              
           </div>
         )
       }else{
-        
-        
         return (
           <div className={week} key={k}>
-            <OneDay key={k} day={v} credit={v.credit} debit={v.debit} today={todayClass}/>
+            <OneDay key={k} day={v} credit={v.credit} debit={v.debit} today={todayClass} 
+            getGoods={ function(){self.setState({hidden:'none'});} } />
           </div>
         )
       }
     })
     return days;
   }
+  
 
   render() {
     let month = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'spt', 'nvm', 'dec']
     let dayz = this.getDayz(this.props.month); // массив с кол-ом дней
-    //let d;
     dayz = this.addDate(dayz, this.state.store, this.props.year, month[this.props.month-1]); // добавить в массив дней, объект с данными, если они есть
-    //console.log(dayz);
-    //console.log(dayz, this.state.store, this.props.year, this.props.month);
+    
     this.voidDays(dayz, this.props.voidDays);  // добавили пустые дни в массив
     dayz = this.getRenDayz(dayz, this.props.month-1);
 
     return ( 
-      <div onClick={this.go.bind(this, 1, 1)} style={{clear: 'both'}} >
-        {console.time('SPEED')}
+      <div>
+        <div style={{clear: 'both'}} >
           {dayz} 
-        {console.timeEnd('SPEED')} 
-        <div>календарь{this.state.store['2017']['feb'][0].debit}</div>
-        
-      </div>
-    
+        </div>
+        <div style={{'display': this.state.hidden}}> 
+         <CostList  goods={this.state.goods}/>
+        </div> 
+       </div>    
+
     );
   }
 }

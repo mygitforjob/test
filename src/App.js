@@ -5,6 +5,7 @@ import Time from './Time';
 import Day from './Day';
 import Calendar from './Calendar';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,7 @@ class App extends Component {
     let voidDays = new Date(2017, month, 1).getDay();
     this.state = {date: '', month: month, voidDays: voidDays};
   }
-
+  getGoods(){}
   onClick(){
     let month  = this.state.month; 
     let m = this.state.month;
@@ -22,14 +23,14 @@ class App extends Component {
 
     m = m > 11 ? 0 : m;
     let voidDays = new Date(2017, m, 1).getDay();
-    console.log("Дней "+m);
+    //console.log("Дней "+m);
     //voidDays = voidDays === 1 ? 6 : --voidDays; 
     
     this.setState({voidDays})
   }
 
   render() {
-    console.log('App render'); 
+    //console.log('App render'); 
     const m = ["Январь","Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
     return ( 
       <div className="App">
@@ -42,6 +43,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <Time />
+
         <div style={{clear: 'both'}}>
           <button onClick={this.onClick.bind(this)}>
             {m[this.state.month-1]}
@@ -52,8 +54,7 @@ class App extends Component {
         <Calendar 
           month={this.state.month} 
           voidDays={this.state.voidDays}
-          year={'2017'}
-        />
+          year={'2017'} />
 
       </div>
     );

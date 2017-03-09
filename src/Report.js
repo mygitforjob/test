@@ -76,34 +76,31 @@ class Report extends Component{
 					
 				</div>
 				<div className='Report-Select'>
+					
 					<div>
-						
-						<select 
-								defaultValue={ new Date().getMonth() }
-							 	onChange={ (e) => { 
-							 		let mon = e.target.value; 
-							 		this.setState({toDate:{...this.state.toDate, month: mon}});
-							 		//console.log('Target', this.state.toDate.day ) 
-								}}
+						<select defaultValue={ new Date().getMonth() }
+						 	onChange={ (e) => { 
+						 			let mon = e.target.value; 
+						 			this.setState( {toDate:{...this.state.toDate, month: mon}} );
+						 		}
+						 	}
 						>
-
-							{this.getMonths(this.state.toDate.month)}
-
+							{this.getMonths( this.state.toDate.month )}
 						</select>
 					</div>
+					
 					<div>
-
-						<select 
-								defaultValue={this.state.toDate.day}
+						<select defaultValue={this.state.toDate.day}
 								onChange={ (e) => {
 									this.state.toDate.dday(e.target.value);
 									//console.log(this.state.toDate.day)
-								}}
+								}
+							}
 						>
 							{this.getDays()}
 						</select>
-					
 					</div>
+
 					<div>
 						<select >
 						    <option value="2014">2014</option>

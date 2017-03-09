@@ -1,0 +1,23 @@
+.Report{
+	clear: both;
+	margin: 0 auto; 
+	width: 300px;
+	border: 1px solid black;
+}
+
+.Report select{
+	margin: 5px;
+	float: left;
+}
+
+
+
+.Report-Select div:last-child select:last-child{
+	color: red;
+}
+
+.Report-Select{
+	width: 80%;
+	margin: auto; 
+
+}
